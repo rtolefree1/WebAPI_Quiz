@@ -1,23 +1,113 @@
-.container, .jQueryQuestions, .directions, .buttonClass
+.jQueryQuestions, .directions, .buttonClass
 {
-  /* display: block; */
-  text-align: center; 
   border-style: solid;
   border-width: 5px;
-  margin-left: 500px;
-  margin-right: 500px;
+}
+.buttonClass
+{
+    padding: 10px;
+    color: white;
+}
+#startContainer{
+    display: flex;
+    flex-flow: column;
+}
+
+#startContainer p{
+   display: flex;
+   justify-content: center;
+}
+
+.directions{
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    margin: auto;
+    width: 225px;
+    padding: 5px;
+}
+
+
+.jQueryQuestions{
+    display: flex;
+    justify-content: center;
+    flex-grow: 4;
+
+}
+#intialButtonContainer{
+    display: flex;
+    justify-content: center;
+    padding: 10px;
+}
+
+
+#quizContainer p {
+    display: flex;
+    justify-content: center;
+    border-style: solid;
+    border-width: 5px;
+    font-weight: bolder;
+    padding: 15px;
+    font-size: 20px;
+}
+
+#quizContainer button {
+    display: flex;
+    justify-content: center;
+    margin: auto;
+    border-style: solid;
+    border-width: 1px;
+    background-color: rgb(112, 8, 112);
+    color: white;
+    border-radius: 15%;
+    padding: 10px;
+    margin-top: 5px;
+}
+
+#results{
+    display: flex;
+    justify-content: center;
+    padding-top: 10px;
+    font-weight: bolder;
+}
+header{
+    display: flex;
+    justify-content: space-between;
+    width: 400px;
+}
+
+#headerContainer a{
+    display: flex;
+    /* flex-wrap: wrap; */
+    justify-content: flex-start;
+    justify-content: space-between;   
+}
+
+#timer{
+    display: flex;
+    justify-content: flex-end;
+    padding-right: 10px;
+}
+#time{
+    display: flex;
+    justify-content: flex-end;
+    padding-right: 10px;
     
 }
 
-/* .buttonClass_A,
-.buttonClass_B,
-.buttonClass_C,
-.buttonClass_D
+#headLink
 {
-    text-align: center; 
-    border-style: solid;
-  border-width: 5px;
-  margin-left: 500px;
-  margin-right: 500px;
-    
-} */
+    border: none;
+    background-color: white;
+
+}
+#headerContainer p{
+    display: flex;
+    justify-content: flex-end;
+}
+
+#form{
+    text-align: center;
+    margin: auto;
+}
+

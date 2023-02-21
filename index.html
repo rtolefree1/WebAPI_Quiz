@@ -7,22 +7,34 @@
     <title>WebAPI Quiz</title>
     <link rel="stylesheet" href="./assets/css/style.css" />
 </head>
-<body>
+<body id="root">
+    
+    <header id="headerContainer">
+        <a id="headLink" href="#"></a>
+        <!-- <p id="timer">SomeTimer</p> -->
+    </header>
+    <p id="time"><b>Time: </b></p>
+    <p id="timer"></p><br>
+    <!-- <p id="timer"></p> -->
+    
     <div id="startContainer">
         <h1 class="jQueryQuestions" >Coding Quiz Challenge</h1>
-        <p class="directions" >"Please choose the correct answer"</p>
+        <p class="directions">
+            Please choose the correct answer.<br>
+            You have 60 seconds to complete.
+            Click on Start Quiz Button!
+        </p>  
+    </div>
+
+    <div id="intialButtonContainer">
         <button class="buttonClass" id="buttonSubmit" type="button" style="background-color: purple; ">Start Quiz</button>
     </div>
-    <div id="quizContainer">
+    <div id="quizComplete"></div>
+    <div id="quizContainer"></div>
+    <div id="results"></div>
+    <form id="form"></form>
+    <ol></ol>
 
-        
-    </div>
-    <!-- <button class="buttonClass_A" type="button"></button>
-    <button class="buttonClass_B" type="button"></button>
-    <button class="buttonClass_C" type="button"></button>
-    <button class="buttonClass_D" type="button" ></button> -->
-    <ol>
-    </ol>
     <script src="./assets/js/script.js"></script>
 </body>
 </html>
