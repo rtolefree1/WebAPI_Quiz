@@ -5,7 +5,8 @@
 This Challenge display a build timed coding quiz with multiple-choice questions. This app will run in the browser and will feature dynamically updated HTML and CSS powered by JavaScript code that was written. It will have a clean, polished, and responsive user interface. 
 
 ## GitHub URL:
-<br><br><br>
+GitHub URL : https://rtolefree1.github.io/WebAPI_Quiz/
+<br><br>
 
 ## User Story
 
