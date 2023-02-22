@@ -70,7 +70,38 @@ clearScoreButton.addEventListener("click", function(){
 // Link to view all Scores
 highScoresButton.textContent="View High Scores";
 headContainLink.appendChild(highScoresButton);
-highScoresButton.addEventListener("click", submitStudentNameGrade);
+highScoresButton.addEventListener("click", function(){
+  containerEl.style.display="block";
+  questionEl.style.display="flex";
+    instructionsEl.style.display="flex";
+    questionEl.innerHTML='';
+
+    quizEl.innerHTML='';
+    instructionsEl.innerHTML = '';
+  
+
+    let s1 = document.createElement("h2");
+    s1.textContent= "High Scores";
+   
+    questionEl.appendChild(s1);
+
+    let gradePara = document.createElement("p");
+    for(let i= 0; i<studGradeArray.length; i++){
+      //debugger
+      let b1 = document.createElement("br");
+      let q1 = document.createElement("p");
+      q1.textContent = `${studInitialArray[i]}-${studGradeArray[i]}` + `\n` ;
+     
+      instructionsEl.appendChild(q1);
+    }
+
+
+    goBackButton.textContent = "Go Back";
+    quizEl.appendChild(goBackButton);
+    clearScoreButton.textContent = "ClearScore";
+    quizEl.appendChild(clearScoreButton);
+
+});
 //  submitButton.addEventListener("click", submitStudentNameGrade);
 
 // Displaying one question at a time
@@ -98,7 +129,7 @@ function displayQuestion(){
     newButton.addEventListener("click", checkAnswer);
   }
   
-  quizEl.appendChild(nextButton);
+  //quizEl.appendChild(nextButton);
 
 }
 
@@ -113,10 +144,28 @@ function checkAnswer(event){
         resultsEl.append("Your answer is correct");
         console.log("Your answer is correct");
         quizGrade++;
+        
+        resultsEl.textContent='';
+        questionCount++;
+    
+        if(questions.length === questionCount){
+        Done();
+        return;
+       }
+        displayQuestion();
+
     }else{
         resultsEl.textContent='';
         resultsEl.append("Your answer is NOT correct");
         console.log("Your answer is NOT correct");
+        resultsEl.textContent='';
+        questionCount++;
+    
+        if(questions.length === questionCount){
+        Done();
+        return;
+       }
+        displayQuestion();
     }
     
     console.log(event.target.textContent);
@@ -166,16 +215,17 @@ function Done(event){
     submitButton.addEventListener("click", submitStudentNameGrade);
 }
 
-nextButton.addEventListener("click", function(){
-    resultsEl.textContent='';
-    questionCount++;
+// below is added to check method
+// nextButton.addEventListener("click", function(){
+//     resultsEl.textContent='';
+//     questionCount++;
 
-    if(questions.length === questionCount){
-    Done();
-    return;
-   }
-    displayQuestion();   
-});
+//     if(questions.length === questionCount){
+//     Done();
+//     return;
+//    }
+//     displayQuestion();   
+// });
 
 buttonEl.addEventListener("click", function(){
     containerEl.style.display = "none";
