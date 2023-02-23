@@ -28,7 +28,7 @@ let highScoresButton = document.createElement("button");
 // Initializing variables and arrays
 let quizGrade = 0;
 var questionCount = 0;
-var sixtySeconds = 15;
+var sixtySeconds = 60;
 var secondsLeft = sixtySeconds;
 let OnDonePage = false;
 
