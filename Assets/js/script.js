@@ -28,6 +28,13 @@ let highScoresButton = document.createElement("button");
 // Initializing variables and arrays
 let quizGrade = 0;
 var questionCount = 0;
+var sixtySeconds = 15;
+var secondsLeft = sixtySeconds;
+let OnDonePage = false;
+
+if(secondsLeft === 0){
+  Done();
+}
 
 // create object that local storage info or empty array
 let studentObj = JSON.parse(localStorage.getItem("studentInfo")) || [];
@@ -74,7 +81,7 @@ highScoresButton.addEventListener("click", function(){
   containerEl.style.display="block";
  questionEl.style.display="flex";
    instructionsEl.style.display="flex";
-
+  buttonEl.style.display="none";
  
     clearInnerHTML(questionEl, quizEl, instructionsEl, obj4='', obj5='', obj6='');
     create_h2("High Scores");
@@ -154,7 +161,8 @@ function checkAnswer(event){
         questionCount++;
     
         if(questions.length === questionCount){
-        Done();
+          //secondsLeft=0;
+          Done();
         return;
        }
         displayQuestion();
@@ -168,7 +176,8 @@ function checkAnswer(event){
         secondsLeft = secondsLeft -5;
     
         if(questions.length === questionCount){
-        Done();
+       // secondsLeft = 0;
+          Done();
         return;
        }
         displayQuestion();
@@ -179,11 +188,12 @@ function checkAnswer(event){
 
 function Done(event){
     // debugger
+    OnDonePage = true;
    questionEl.style.display="flex";
    instructionsEl.style.display="flex";
    containerEl.style.display="block";
-  
-   
+   //secondsLeft =0;
+   //setTime().secondsLeft = 0;
     clearInnerHTML(questionEl, resultsEl, questionEl, quizEl, instructionsEl, obj6='');
 
   
@@ -277,7 +287,8 @@ goBackButton.addEventListener("click", function(){
   quizEl.innerHTML="";
   grade=0;
   quizGrade = 0;
-  secondsLeft = 60;
+  secondsLeft = sixtySeconds;
+  OnDonePage = false;
   displayFirstPage();
 
   
@@ -285,7 +296,7 @@ goBackButton.addEventListener("click", function(){
 
 
 
-var secondsLeft = 60;
+
 
 function setTime() {
   // Sets interval in variable
@@ -293,12 +304,18 @@ function setTime() {
     secondsLeft--;
     timerEl.textContent = secondsLeft;
 
-    if(secondsLeft === 0) {
+    if(secondsLeft === 0 && OnDonePage === false) {
       // Stops execution of action at set interval
       clearInterval(timerInterval);
-      secondsLeft = 7;
+      //secondsLeft = 60;
+      //clearTimeout();
       Done();
-    }
+    }else if (secondsLeft === 0 && OnDonePage === true) {
+      clearInterval(timerInterval);
+     } //else {
+      
+    // }
+    
 
   }, 1000);
 }
