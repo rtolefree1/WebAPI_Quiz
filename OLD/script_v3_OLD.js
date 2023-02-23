@@ -18,7 +18,6 @@ let grade=0;
 let studentNameValue = "";
 let quizEl = document.querySelector("#quizContainer");
 let timerEl = document.querySelector("#timer");
-let timeEl = document.querySelector("#time");
 let formEl = document.querySelector("#form");
 let submitButton = document.createElement("button");
 let goBackButton = document.createElement("button");
@@ -59,8 +58,8 @@ var questions = [
 
 // button to start the quiz
 clearScoreButton.addEventListener("click", function(){
-
-  localStorage.clear();
+  studGradeArray = [];
+  studInitialArray = [];
   instructionsEl.style.display="none";
 });
 
@@ -72,19 +71,27 @@ highScoresButton.textContent="View High Scores";
 headContainLink.appendChild(highScoresButton);
 highScoresButton.addEventListener("click", function(){
   containerEl.style.display="block";
- questionEl.style.display="flex";
-   instructionsEl.style.display="flex";
+  questionEl.style.display="flex";
+    instructionsEl.style.display="flex";
 
- 
+
+    addStyle(questionEl.style.display, instructionsEl.style.display, containerEl.style.display, obj4_block='');
     clearInnerHTML(questionEl, quizEl, instructionsEl, obj4='', obj5='', obj6='');
     create_h2("High Scores");
-    
+    // questionEl.appendChild(s1);
 
     let gradePara = document.createElement("p");
 
     printStudentInfo(studentObj);
     
-  
+    // for(let i= 0; i<studGradeArray.length; i++){
+    //   //debugger
+    //   let b1 = document.createElement("br");
+    //   let q1 = document.createElement("p");
+    //   q1.textContent = `${studInitialArray[i]}-${studGradeArray[i]}` + `\n` ;
+     
+    //   instructionsEl.appendChild(q1);
+    // }
 
 
     goBackButton.textContent = "Go Back";
@@ -93,19 +100,7 @@ highScoresButton.addEventListener("click", function(){
     quizEl.appendChild(clearScoreButton);
 
 });
-
-function displayFirstPage()
-{
-    timeEl.textContent = "Time";
-    questionEl.textContent = "Coding Quiz Challenge";
-    instructionsEl.textContent = "Please choose the correct answer." + "\n"
-                                + "You have 60 seconds to complete." + "\n"
-                                + "Click on Start Quiz Button!";
-
-    buttonEl.textContent = "Start Quiz";
-
-}
-
+//  submitButton.addEventListener("click", submitStudentNameGrade);
 
 // Displaying one question at a time
 function displayQuestion(){
@@ -134,7 +129,7 @@ function displayQuestion(){
 
   }
   
-
+  //quizEl.appendChild(nextButton);
 
 }
 
@@ -165,7 +160,6 @@ function checkAnswer(event){
         
         resultsEl.textContent='';
         questionCount++;
-        secondsLeft = secondsLeft -5;
     
         if(questions.length === questionCount){
         Done();
@@ -179,11 +173,16 @@ function checkAnswer(event){
 
 function Done(event){
     // debugger
-   questionEl.style.display="flex";
-   instructionsEl.style.display="flex";
-   containerEl.style.display="block";
-  
-   
+    questionEl.style.display="flex";
+    instructionsEl.style.display="flex";
+    containerEl.style.display="block";
+    // questionEl.innerHTML='';
+    // resultsEl.innerHTML='';
+    // questionEl.innerHTML='';
+    // quizEl.innerHTML='';
+    // instructionsEl.innerHTML = '';
+
+    addStyle(questionEl.style.display, instructionsEl.style.display, containerEl.style.display, obj4_block='')
     clearInnerHTML(questionEl, resultsEl, questionEl, quizEl, instructionsEl, obj6='');
 
   
@@ -223,9 +222,9 @@ function Done(event){
 
 
 buttonEl.addEventListener("click", function(){
-   containerEl.style.display = "none";
+    containerEl.style.display = "none";
     initButCont.style.display = "none";
-    displayQuestion();  
+    displayQuestion(); 
     setTime();  
 });
 
@@ -233,13 +232,21 @@ buttonEl.addEventListener("click", function(){
 
 
 function submitStudentNameGrade(event){
- 
-    studentNameValue = document.getElementById("studentName").value;
+ console.log("student name3:",document.getElementById("studentName").value);
+ studentNameValue = document.getElementById("studentName").value;
+ containerEl.style.display="block";
    
-    addStyle(obj1_flex='', obj2_flex='', containerEl.style.display, obj4_block='')
+
     clearInnerHTML(questionEl, resultsEl, quizEl, instructionsEl, formEl, obj6='');
 
     create_h2("High Scores");
+    // let s1 = document.createElement("h2");
+    // s1.textContent= "High Scores";
+   
+    // questionEl.appendChild(s1);
+
+    //studGradeArray.push(grade);
+   // studInitialArray.push(studentNameValue)
 
     let gradePara = document.createElement("p");
     
@@ -255,7 +262,12 @@ function submitStudentNameGrade(event){
   // set new submission to local storage
   localStorage.setItem("studentInfo", JSON.stringify(studentObj));
 
- 
+    // for(let i=0;i<studentObj.length; i++){
+    //   let q1 = document.createElement("p");
+    //   q1.textContent = `${studentObj[i].studentInitials}-${studentObj[i].studentGrade}` + `\n` ;
+      
+    //   instructionsEl.appendChild(q1);
+    // }
 
     printStudentInfo(studentObj);
 
@@ -272,14 +284,15 @@ function submitStudentNameGrade(event){
 
 goBackButton.addEventListener("click", function(){
   questionCount=0;
- instructionsEl.style.display="flex";
- initButCont.style.display="flex";
-  quizEl.innerHTML="";
+  questionEl.style.display="none";
+  instructionsEl.style.display="none";
   grade=0;
   quizGrade = 0;
-  secondsLeft = 60;
-  displayFirstPage();
+//   for(var i = 0; i < studGradeArray.length;i++){
+//     console.log("student", i, "grade", studGradeArray[i])
+//   }
 
+  displayQuestion();
   
 });
 
@@ -296,8 +309,6 @@ function setTime() {
     if(secondsLeft === 0) {
       // Stops execution of action at set interval
       clearInterval(timerInterval);
-      secondsLeft = 7;
-      Done();
     }
 
   }, 1000);
@@ -322,21 +333,12 @@ function clearInnerHTML(obj1, obj2, obj3, obj4, obj5, obj6)
   obj6.innerHTML = '';
 }
 
-function addStyle(obj1_flex, obj2_flex, obj3_block, obj4_block, obj5_none, obj6_none)
+function addStyle(obj1_flex, obj2_flex, obj3_block, obj4_block)
 {
   obj1_flex = "flex";
   obj2_flex = "flex";
   obj3_block = "block";
   obj4_block = "block";
-  obj5_none = "none";
-  obj6_none = "none";
-
-}
-
-function addStyleNone(obj1_none, obj2_none)
-{
-  obj1_none = "none";
-  obj2_none = "none";
 
 }
 
@@ -351,4 +353,3 @@ function printStudentInfo(sObj)
 
 }
 
-displayFirstPage()

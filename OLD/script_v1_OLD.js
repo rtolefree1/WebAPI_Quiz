@@ -18,7 +18,6 @@ let grade=0;
 let studentNameValue = "";
 let quizEl = document.querySelector("#quizContainer");
 let timerEl = document.querySelector("#timer");
-let timeEl = document.querySelector("#time");
 let formEl = document.querySelector("#form");
 let submitButton = document.createElement("button");
 let goBackButton = document.createElement("button");
@@ -27,10 +26,13 @@ let highScoresButton = document.createElement("button");
 
 // Initializing variables and arrays
 let quizGrade = 0;
+let studInitialArray = [];
+let studGradeArray = [];
 var questionCount = 0;
 
-// create object that local storage info or empty array
-let studentObj = JSON.parse(localStorage.getItem("studentInfo")) || [];
+
+
+
 
 // array of objects; the objects have a key:value pair, value is String and arrays
 var questions = [
@@ -59,12 +61,10 @@ var questions = [
 
 // button to start the quiz
 clearScoreButton.addEventListener("click", function(){
-
-  localStorage.clear();
+  studGradeArray = [];
+  studInitialArray = [];
   instructionsEl.style.display="none";
 });
-
-
 
 
 // Link to view all Scores
@@ -72,19 +72,28 @@ highScoresButton.textContent="View High Scores";
 headContainLink.appendChild(highScoresButton);
 highScoresButton.addEventListener("click", function(){
   containerEl.style.display="block";
- questionEl.style.display="flex";
-   instructionsEl.style.display="flex";
+  questionEl.style.display="flex";
+    instructionsEl.style.display="flex";
+    questionEl.innerHTML='';
 
- 
-    clearInnerHTML(questionEl, quizEl, instructionsEl, obj4='', obj5='', obj6='');
-    create_h2("High Scores");
-    
+    quizEl.innerHTML='';
+    instructionsEl.innerHTML = '';
+  
+
+    let s1 = document.createElement("h2");
+    s1.textContent= "High Scores";
+   
+    questionEl.appendChild(s1);
 
     let gradePara = document.createElement("p");
-
-    printStudentInfo(studentObj);
-    
-  
+    for(let i= 0; i<studGradeArray.length; i++){
+      //debugger
+      let b1 = document.createElement("br");
+      let q1 = document.createElement("p");
+      q1.textContent = `${studInitialArray[i]}-${studGradeArray[i]}` + `\n` ;
+     
+      instructionsEl.appendChild(q1);
+    }
 
 
     goBackButton.textContent = "Go Back";
@@ -93,19 +102,7 @@ highScoresButton.addEventListener("click", function(){
     quizEl.appendChild(clearScoreButton);
 
 });
-
-function displayFirstPage()
-{
-    timeEl.textContent = "Time";
-    questionEl.textContent = "Coding Quiz Challenge";
-    instructionsEl.textContent = "Please choose the correct answer." + "\n"
-                                + "You have 60 seconds to complete." + "\n"
-                                + "Click on Start Quiz Button!";
-
-    buttonEl.textContent = "Start Quiz";
-
-}
-
+//  submitButton.addEventListener("click", submitStudentNameGrade);
 
 // Displaying one question at a time
 function displayQuestion(){
@@ -124,17 +121,15 @@ function displayQuestion(){
 
   // for loop to create button associated with choices
   for(let i = 0; i < questions[questionCount].choices.length; i++){
-
     let newButton = document.createElement("button");
     newButton.textContent = questions[questionCount].choices[i];
     quizEl.appendChild(newButton);
     //var ans = "True";
 
     newButton.addEventListener("click", checkAnswer);
-
   }
   
-
+  //quizEl.appendChild(nextButton);
 
 }
 
@@ -147,7 +142,7 @@ function checkAnswer(event){
     if(output === questions[questionCount].answer[0]){
         resultsEl.textContent='';
         resultsEl.append("Your answer is correct");
-        
+        console.log("Your answer is correct");
         quizGrade++;
         
         resultsEl.textContent='';
@@ -162,10 +157,9 @@ function checkAnswer(event){
     }else{
         resultsEl.textContent='';
         resultsEl.append("Your answer is NOT correct");
-        
+        console.log("Your answer is NOT correct");
         resultsEl.textContent='';
         questionCount++;
-        secondsLeft = secondsLeft -5;
     
         if(questions.length === questionCount){
         Done();
@@ -179,15 +173,18 @@ function checkAnswer(event){
 
 function Done(event){
     // debugger
-   questionEl.style.display="flex";
-   instructionsEl.style.display="flex";
-   containerEl.style.display="block";
-  
-   
-    clearInnerHTML(questionEl, resultsEl, questionEl, quizEl, instructionsEl, obj6='');
+    questionEl.style.display="flex";
+    instructionsEl.style.display="flex";
+    containerEl.style.display="block";
+    questionEl.innerHTML='';
+    resultsEl.innerHTML='';
+    questionEl.innerHTML='';
+    quizEl.innerHTML='';
+    instructionsEl.innerHTML = '';
 
-  
-    create_h2("Your quiz is COMPLETE!");
+    let f1 = document.createElement("h2");
+    f1.textContent = "Your quiz is COMPLETE!";
+    questionEl.appendChild(f1);
 
     let f2 = document.createElement("p");
     grade =  Math.floor(100*(quizGrade/questions.length));
@@ -201,85 +198,90 @@ function Done(event){
     f4.type = "text";
     f4.id="studentName";
     f5.type = "submit";
-    f5.id="studentGrade";
     f5.value = "Submit";
     f3.textContent = "Enter your credentials:";
 
     formEl.appendChild(f3);
     formEl.appendChild(f4);
     
-    
     submitButton.textContent="Submit Grade"
     formEl.appendChild(submitButton);
 
     console.log(grade);
   
-    
+    console.log("student name:",document.getElementById("studentName").innerHTML);
     console.log("student name2:",document.getElementById("studentName").value);
-
 
     submitButton.addEventListener("click", submitStudentNameGrade);
 }
 
+// below is added to check method
+// nextButton.addEventListener("click", function(){
+//     resultsEl.textContent='';
+//     questionCount++;
+
+//     if(questions.length === questionCount){
+//     Done();
+//     return;
+//    }
+//     displayQuestion();   
+// });
 
 buttonEl.addEventListener("click", function(){
-   containerEl.style.display = "none";
+    containerEl.style.display = "none";
     initButCont.style.display = "none";
-    displayQuestion();  
+    displayQuestion(); 
     setTime();  
 });
 
-
-
-
 function submitStudentNameGrade(event){
- 
-    studentNameValue = document.getElementById("studentName").value;
+ console.log("student name3:",document.getElementById("studentName").value);
+ studentNameValue = document.getElementById("studentName").value;
+ containerEl.style.display="block";
+    questionEl.innerHTML='';
+    resultsEl.innerHTML='';
+    questionEl.innerHTML='';
+    quizEl.innerHTML='';
+    instructionsEl.innerHTML = '';
+    formEl.innerHTML='';
+    let s1 = document.createElement("h2");
+    s1.textContent= "High Scores";
    
-    addStyle(obj1_flex='', obj2_flex='', containerEl.style.display, obj4_block='')
-    clearInnerHTML(questionEl, resultsEl, quizEl, instructionsEl, formEl, obj6='');
+    questionEl.appendChild(s1);
 
-    create_h2("High Scores");
+    studGradeArray.push(grade);
+    studInitialArray.push(studentNameValue)
 
     let gradePara = document.createElement("p");
-    
-    let studentInfo = {
-      studentInitials : studentNameValue,
-      studentGrade :  grade
+    for(let i= 0; i<studGradeArray.length; i++){
+      //debugger
+      let b1 = document.createElement("br");
+      let q1 = document.createElement("p");
+      q1.textContent = `${studInitialArray[i]}-${studGradeArray[i]}` + `\n` ;
+      // gradePara.textContent = `${studInitialArray[i]}-${studGradeArray[i]}`;
+      
+     // instructionsEl.appendChild(b1)
+      instructionsEl.appendChild(q1);
     }
-
-    studentObj.push(studentInfo);
-
-    console.log(studentObj);
-  
-  // set new submission to local storage
-  localStorage.setItem("studentInfo", JSON.stringify(studentObj));
-
- 
-
-    printStudentInfo(studentObj);
-
     goBackButton.textContent = "Go Back";
     quizEl.appendChild(goBackButton);
-
     clearScoreButton.textContent = "ClearScore";
     quizEl.appendChild(clearScoreButton);
    
 }
 
 
-
-
 goBackButton.addEventListener("click", function(){
   questionCount=0;
- instructionsEl.style.display="flex";
- initButCont.style.display="flex";
-  quizEl.innerHTML="";
+  questionEl.style.display="none";
+  instructionsEl.style.display="none";
   grade=0;
   quizGrade = 0;
-  secondsLeft = 60;
-  displayFirstPage();
+  for(var i = 0; i < studGradeArray.length;i++){
+    console.log("student", i, "grade", studGradeArray[i])
+  }
 
+  displayQuestion();
   
 });
 
@@ -296,59 +298,8 @@ function setTime() {
     if(secondsLeft === 0) {
       // Stops execution of action at set interval
       clearInterval(timerInterval);
-      secondsLeft = 7;
-      Done();
     }
 
   }, 1000);
 }
 
-// creation of h2 element
-function create_h2(h2_textContent){
-  let f1 = document.createElement("h2");
-  f1.textContent = h2_textContent;
-  questionEl.appendChild(f1);
-  
-}
-
-function clearInnerHTML(obj1, obj2, obj3, obj4, obj5, obj6)
-{
-  
-  obj1.innerHTML = '';
-  obj2.innerHTML = '';
-  obj3.innerHTML = '';
-  obj4.innerHTML = '';
-  obj5.innerHTML = '';
-  obj6.innerHTML = '';
-}
-
-function addStyle(obj1_flex, obj2_flex, obj3_block, obj4_block, obj5_none, obj6_none)
-{
-  obj1_flex = "flex";
-  obj2_flex = "flex";
-  obj3_block = "block";
-  obj4_block = "block";
-  obj5_none = "none";
-  obj6_none = "none";
-
-}
-
-function addStyleNone(obj1_none, obj2_none)
-{
-  obj1_none = "none";
-  obj2_none = "none";
-
-}
-
-function printStudentInfo(sObj)
-{
-    for(let i=0;i<sObj.length; i++){
-        let q1 = document.createElement("p");
-        q1.textContent = `${sObj[i].studentInitials}-${sObj[i].studentGrade}` + `\n` ;
-        
-        instructionsEl.appendChild(q1);
-      }
-
-}
-
-displayFirstPage()

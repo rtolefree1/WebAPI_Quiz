@@ -25,7 +25,7 @@ THEN a timer starts and I am presented with a question
 WHEN I answer a question
 THEN I am presented with another question
 WHEN I answer a question incorrectly
-THEN time is subtracted from the clock
+THEN time is subtracted from the clock (I will subtract 5 seconds off the clock)
 WHEN all questions are answered or the timer reaches 0
 THEN the game is over
 WHEN the game is over
@@ -41,11 +41,13 @@ The following animation demonstrates the application functionality:
 Image of multiple attempt for this Quiz
 ![](./Assets/scores.jpg)
 
-## Grading Requirements - Missing Items (Errors)
+## NOTE:
+WHEN I answer a question incorrectly<br>
+THEN time is subtracted from the clock <b>(I will subtract 5 seconds off the clock)</b> <br>
+Using Javascript for the interface<br>
+Timer starts when quiz starts<br>
 
- <li> Have not been doing multiple committes. All changes has been local.</li> <br>
- <li> "View High Scores" link in the top left corner is not working.</li> <br>
- <li> User is able to change choice after view answer.</li> <br>
+
 
 
 ---

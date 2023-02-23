@@ -92,6 +92,7 @@ header{
     display: flex;
     justify-content: flex-end;
     padding-right: 10px;
+    font-weight: bolder;
     
 }
 
